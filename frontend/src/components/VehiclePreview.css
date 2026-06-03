@@ -1,0 +1,50 @@
+.vehicle-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.car-body {
+  width: 600px;
+  height: 250px;
+  background: #1f1f1f;
+  border-radius: 30px;
+  position: relative;
+}
+
+.light {
+  position: absolute;
+  width: 60px;
+  height: 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.drl {
+  background: #333;
+  top: 80px;
+}
+
+.drl.active {
+  background: white;
+  box-shadow: 0 0 20px white;
+}
+
+.indicator {
+  background: #333;
+  top: 140px;
+}
+
+.indicator.active {
+  background: orange;
+  box-shadow: 0 0 20px orange;
+}
+
+.left {
+  left: 40px;
+}
+
+.right {
+  right: 40px;
+}

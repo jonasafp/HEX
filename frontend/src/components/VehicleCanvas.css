@@ -1,0 +1,245 @@
+.canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.car-shell {
+  width: 980px;
+  height: 420px;
+  position: relative;
+
+  border-radius: 50px;
+
+  background:
+    radial-gradient(circle at center,
+      #232323 0%,
+      #111 60%,
+      #080808 100%);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.04);
+
+  overflow: hidden;
+
+  box-shadow:
+    0 0 60px rgba(0, 0, 0, 0.6),
+    inset 0 0 40px rgba(255, 255, 255, 0.03);
+  
+  backdrop-filter: blur(20px);
+}
+
+/* REFLEXO */
+
+.car-shell::before {
+  content: "";
+
+  position: absolute;
+
+  width: 100%;
+  height: 120px;
+
+  top: 0;
+
+  background:
+    linear-gradient(to bottom,
+      rgba(255, 255, 255, 0.08),
+      transparent);
+}
+
+/* BASE DAS LUZES */
+
+.light-layer {
+  position: absolute;
+
+  cursor: pointer;
+
+  transition:
+    all 0.25s ease;
+}
+
+/* DRL */
+
+.drl-left,
+.drl-right {
+  width: 110px;
+  height: 18px;
+
+  background: #1f1f1f;
+
+  top: 180px;
+
+  border-radius: 20px;
+}
+
+.drl-left {
+  left: 110px;
+  transform: skew(-20deg);
+}
+
+.drl-right {
+  right: 110px;
+  transform: skew(20deg);
+}
+
+.drl-left.active,
+.drl-right.active {
+  background: white;
+
+  box-shadow:
+    0 0 20px white,
+    0 0 40px rgba(255, 255, 255, 0.7),
+    0 0 80px rgba(255, 255, 255, 0.4);
+}
+
+/* SETAS */
+
+.indicator-left,
+.indicator-right {
+  width: 90px;
+  height: 18px;
+
+  background: #2b2b2b;
+
+  top: 220px;
+
+  border-radius: 20px;
+}
+
+.indicator-left {
+  left: 120px;
+  transform: skew(-25deg);
+}
+
+.indicator-right {
+  right: 120px;
+  transform: skew(25deg);
+}
+
+.indicator-left.active,
+.indicator-right.active {
+  background: #ffae00;
+
+  box-shadow:
+    0 0 20px #ffae00,
+    0 0 40px rgba(255, 174, 0, 0.7),
+    0 0 80px rgba(255, 174, 0, 0.5);
+}
+
+/* FAROL BAIXO */
+
+.low-left,
+.low-right {
+  width: 130px;
+  height: 35px;
+
+  background: #1d1d1d;
+
+  top: 250px;
+
+  border-radius: 30px;
+}
+
+.low-left {
+  left: 80px;
+}
+
+.low-right {
+  right: 80px;
+}
+
+.low-left.active,
+.low-right.active {
+  background: #d6ecff;
+
+  box-shadow:
+    0 0 30px #d6ecff,
+    0 0 70px rgba(214, 236, 255, 0.8),
+    0 0 120px rgba(214, 236, 255, 0.4);
+}
+
+.car-shell::after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255,255,255,0.03),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+/* BLINK */
+
+@keyframes blinkAnim {
+
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* FADE */
+
+@keyframes fadeAnim {
+
+  0% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* SEQUENTIAL */
+
+@keyframes sequentialAnim {
+
+  0% {
+    transform:
+      translateX(0px);
+  }
+
+  50% {
+    transform:
+      translateX(6px);
+  }
+
+  100% {
+    transform:
+      translateX(0px);
+  }
+}
+
+/* ESTADOS */
+
+.blink {
+  animation:
+    blinkAnim 1s infinite;
+}
+
+.fade {
+  animation:
+    fadeAnim 1.2s infinite alternate;
+}
+
+.sequential {
+  animation:
+    sequentialAnim 0.5s infinite;
+}
