@@ -38,9 +38,9 @@ import {
   type VehicleState,
 } from "./state/vehicleState";
 
-import {
-  VehicleStatePanel,
-} from "./components/VehicleStatePanel";
+import { VehicleStatePanel, } from "./components/VehicleStatePanel";
+
+import { applyVehicleLogic, } from "./engine/smartLightEngine";
 
 function App() {
 
@@ -91,7 +91,7 @@ function App() {
 
   useLocalProfiles(profiles);
 
-  const currentProfile =
+  const baseProfile =
     useMemo(() => {
 
       return profiles.find(
@@ -103,6 +103,21 @@ function App() {
     }, [
       profiles,
       selectedEvent,
+    ]);
+
+  const currentProfile =
+    useMemo(() => {
+
+      return applyVehicleLogic(
+        structuredClone(
+          baseProfile
+        ),
+        vehicleState
+      );
+
+    }, [
+      baseProfile,
+      vehicleState,
     ]);
 
   const selectedLight:
