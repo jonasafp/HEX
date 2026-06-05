@@ -33,6 +33,15 @@ import { exportCoding } from "./coding/export/exportCoding";
 import { UDSConsole } from "./components/UDSConsole";
 import { BCMEditor } from "./components/BCMEditor";
 
+import {
+  defaultVehicleState,
+  type VehicleState,
+} from "./state/vehicleState";
+
+import {
+  VehicleStatePanel,
+} from "./components/VehicleStatePanel";
+
 function App() {
 
   const [
@@ -54,6 +63,13 @@ function App() {
     setSelectedVehicle,
   ] = useState<VehicleProfile>(
     vwVehicles[0]
+  );
+
+  const [
+    vehicleState,
+    setVehicleState,
+  ] = useState<VehicleState>(
+    defaultVehicleState
   );
 
   const [
@@ -194,6 +210,18 @@ function App() {
     );
   }
 
+  function updateVehicleState(
+    key: keyof VehicleState
+  ) {
+
+    setVehicleState((prev) => ({
+
+      ...prev,
+
+      [key]: !prev[key],
+    }));
+  }
+
   return (
 
     <div
@@ -270,6 +298,14 @@ function App() {
         <VehicleInfoPanel
           vehicle={
             backend.vehicle
+          }
+        />
+
+        <VehicleStatePanel
+          state={vehicleState}
+
+          updateState={
+            updateVehicleState
           }
         />
 
