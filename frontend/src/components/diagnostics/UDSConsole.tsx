@@ -4,11 +4,11 @@ import {
 
 import {
   sendUDSCommand,
-} from "../api/uds";
+} from "../../api/uds";
 
 import type {
   UDSResponse,
-} from "../api/uds";
+} from "../../api/uds";
 
 export function
 UDSConsole() {

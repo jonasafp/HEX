@@ -1,6 +1,6 @@
 import type {
   VehicleState,
-} from "../state/vehicleState";
+} from "../../state/vehicleState";
 
 interface Props {
 

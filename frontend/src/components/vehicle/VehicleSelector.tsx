@@ -1,10 +1,10 @@
 import type {
   VehicleProfile,
-} from "../types/vehicle";
+} from "../../types/vehicle";
 
 import {
   CustomDropdown,
-} from "./ui/CustomDropdown";
+} from "../ui/CustomDropdown";
 
 interface Props {
 

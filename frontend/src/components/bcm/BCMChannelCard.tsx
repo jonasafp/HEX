@@ -1,10 +1,10 @@
 import type {
     BCMValue,
-} from "../types/backend";
+} from "../../types/backend";
 
 import {
   CustomDropdown,
-} from "./ui/CustomDropdown";
+} from "../ui/CustomDropdown";
 
 interface Props {
 

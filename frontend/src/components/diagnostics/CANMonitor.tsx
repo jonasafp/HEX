@@ -1,15 +1,16 @@
 import type {
-  CodingProfile,
-} from "../types/coding";
+  CANFrame,
+} from "../../types/backend";
 
 interface Props {
 
-  coding:
-    CodingProfile;
+  frames:
+    CANFrame[];
 }
 
-export function BCMPanel({
-  coding,
+export function
+CANMonitor({
+  frames,
 }: Props) {
 
   return (
@@ -35,12 +36,13 @@ export function BCMPanel({
           marginBottom: 20,
         }}
       >
-        BCM Coding
+        CAN Monitor
       </h2>
 
       <div
         style={{
           display: "flex",
+
           flexDirection:
             "column",
 
@@ -48,13 +50,11 @@ export function BCMPanel({
         }}
       >
 
-        {coding.values.map(
-          (value) => (
+        {frames.map(
+          (frame) => (
 
             <div
-              key={
-                value.channelId
-              }
+              key={frame.id}
 
               style={{
                 display: "flex",
@@ -72,20 +72,17 @@ export function BCMPanel({
               }}
             >
 
+              <strong>
+                {frame.id}
+              </strong>
+
               <span>
-                {
-                  value.channelId
-                }
+                {frame.module}
               </span>
 
-              <strong
-                style={{
-                  color:
-                    "#f0b90b",
-                }}
-              >
-                {value.value}
-              </strong>
+              <span>
+                {frame.data}
+              </span>
 
             </div>
           )

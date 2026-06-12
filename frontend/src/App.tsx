@@ -15,14 +15,14 @@ import { defaultProfiles } from "./data/defaultProfiles";
 import { vwVehicles } from "./data/vehicles/vwVehicles";
 
 import { EventSidebar } from "./components/EventSidebar";
-import { VehicleCanvas } from "./components/VehicleCanvas";
+import { VehicleCanvas } from "./components/vehicle/VehicleCanvas";
 import { LightsPanel } from "./components/LightsPanel";
 import { ConfigurationSummary } from "./components/ConfigurationSummary";
 import { EffectsPanel } from "./components/EffectsPanel";
-import { VehicleSelector } from "./components/VehicleSelector";
-import { BCMPanel } from "./components/BCMPanel";
+import { VehicleSelector } from "./components/vehicle/VehicleSelector";
+import { BCMPanel } from "./components/bcm/BCMPanel";
 import { VehicleInfoPanel } from "./components/VehicleInfoPanel";
-import { CANMonitor } from "./components/CANMonitor";
+import { CANMonitor } from "./components/diagnostics/CANMonitor";
 
 import { useLocalProfiles } from "./hooks/useLocalProfiles";
 import { useBackend } from "./hooks/useBackend";
@@ -30,7 +30,7 @@ import { useBackend } from "./hooks/useBackend";
 import { generateCoding } from "./coding/adapters/generateCoding";
 import { exportCoding } from "./coding/export/exportCoding";
 
-import { UDSConsole } from "./components/UDSConsole";
+import { UDSConsole } from "./components/diagnostics/UDSConsole";
 import { BCMEditor } from "./components/BCMEditor";
 
 import {
@@ -38,7 +38,7 @@ import {
   type VehicleState,
 } from "./state/vehicleState";
 
-import { VehicleStatePanel, } from "./components/VehicleStatePanel";
+import { VehicleStatePanel, } from "./components/vehicle/VehicleStatePanel";
 
 import { applyVehicleLogic, } from "./engine/smartLightEngine";
 

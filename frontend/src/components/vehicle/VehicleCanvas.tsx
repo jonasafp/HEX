@@ -3,7 +3,7 @@ import "./VehicleCanvas.css";
 import type {
   LightState,
   LightType,
-} from "../types/lighting";
+} from "../../types/lighting";
 
 interface Props {
   lights: LightState[];

@@ -13,7 +13,7 @@ import type {
 
 import {
   BCMChannelCard,
-} from "./BCMChannelCard";
+} from "./bcm/BCMChannelCard";
 
 export function
 BCMEditor() {
