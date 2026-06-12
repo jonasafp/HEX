@@ -23,7 +23,7 @@ export function VehiclePreview({
     lights.find(
       (light) =>
         light.type === type
-    )?.enabled;
+    )?.config.enabled
 
   return (
     <div className="vehicle-container">

@@ -1,4 +1,4 @@
-import "./VehicleCanvas.css";
+import "../VehicleCanvas.css";
 
 import type {
   LightState,

@@ -1,10 +1,61 @@
-import type { LightState } from "../types/lighting";
+import type {
+  LightState,
+} from "../types/lighting";
 
-export const defaultLights: LightState[] = [
-  { type: "drl", enabled: false },
-  { type: "low_beam", enabled: false },
-  { type: "high_beam", enabled: false },
-  { type: "fog_light", enabled: false },
-  { type: "left_indicator", enabled: false },
-  { type: "right_indicator", enabled: false },
+export const defaultLighting:
+  LightState[] = [
+
+  {
+    type: "drl",
+
+    config: {
+      enabled: false,
+      animation: "steady",
+    },
+  },
+
+  {
+    type: "low_beam",
+
+    config: {
+      enabled: false,
+      animation: "steady",
+    },
+  },
+
+  {
+    type: "high_beam",
+
+    config: {
+      enabled: false,
+      animation: "steady",
+    },
+  },
+
+  {
+    type: "fog_light",
+
+    config: {
+      enabled: false,
+      animation: "steady",
+    },
+  },
+
+  {
+    type: "left_indicator",
+
+    config: {
+      enabled: false,
+      animation: "steady",
+    },
+  },
+
+  {
+    type: "right_indicator",
+
+    config: {
+      enabled: false,
+      animation: "steady",
+    },
+  },
 ];
