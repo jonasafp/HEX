@@ -42,6 +42,8 @@ import { VehicleStatePanel, } from "./components/vehicle/VehicleStatePanel";
 
 import { applyVehicleLogic, } from "./engine/smartLightEngine";
 
+import { getBCMById, } from "./data/modules/getBCM";
+
 function App() {
 
   const [
@@ -137,6 +139,11 @@ function App() {
 
   const backend =
     useBackend();
+
+  const selectedBCM =
+    getBCMById(
+      selectedVehicle.bcm
+    );
 
   function toggleLight(
     type: LightType
@@ -309,6 +316,38 @@ function App() {
             setSelectedVehicle
           }
         />
+
+        <div
+          style={{
+            marginBottom: 20,
+
+            padding: 14,
+
+            borderRadius: 14,
+
+            background:
+              "rgba(255,255,255,0.03)",
+
+            border:
+              "1px solid rgba(255,255,255,0.05)",
+
+            color: "#bfbfc8",
+          }}
+        >
+
+          <strong>
+            BCM Detectado:
+          </strong>
+
+          {" "}
+
+          {selectedBCM?.name}
+
+          {" | "}
+
+          {selectedBCM?.partNumber}
+
+        </div>
 
         <VehicleInfoPanel
           vehicle={
