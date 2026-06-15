@@ -3,15 +3,14 @@ import {
 } from "react";
 
 import {
-  sendUDSCommand,
-} from "../../api/uds";
+  sendUDS,
+} from "../../uds/udsClient";
 
 import type {
   UDSResponse,
-} from "../../api/uds";
+} from "../../types/uds";
 
-export function
-UDSConsole() {
+export function UDSConsole() {
 
   const [
     command,
@@ -21,44 +20,21 @@ UDSConsole() {
   const [
     response,
     setResponse,
-  ] = useState<
-    UDSResponse | null
-  >(null);
-
-  const [
-    loading,
-    setLoading,
-  ] = useState(false);
+  ] =
+    useState<
+      UDSResponse | null
+    >(null);
 
   async function execute() {
 
-    if (!command) {
-      return;
-    }
-
-    try {
-
-      setLoading(true);
-
-      const result =
-        await sendUDSCommand(
-          command
-        );
-
-      setResponse(
-        result
+    const result =
+      await sendUDS(
+        command
       );
 
-    } catch (error) {
-
-      console.error(
-        error
-      );
-
-    } finally {
-
-      setLoading(false);
-    }
+    setResponse(
+      result
+    );
   }
 
   return (
@@ -67,153 +43,102 @@ UDSConsole() {
       style={{
         marginTop: 24,
 
-        background:
-          "rgba(15,15,20,0.72)",
-
-        border:
-          "1px solid rgba(255,255,255,0.05)",
-
-        borderRadius: 24,
-
         padding: 24,
+
+        borderRadius: 20,
+
+        background:
+          "rgba(255,255,255,0.03)",
       }}
     >
 
-      <h2
-        style={{
-          marginBottom: 20,
-        }}
-      >
+      <h2>
         UDS Console
       </h2>
 
       <div
         style={{
           display: "flex",
-
           gap: 12,
+          alignItems: "center",
         }}
       >
-
         <input
           value={command}
-
           onChange={(e) =>
-            setCommand(
-              e.target.value
-            )
+            setCommand(e.target.value)
           }
-
           placeholder="22F190"
-
           style={{
             flex: 1,
-
-            background:
-              "rgba(255,255,255,0.04)",
-
+            height: 44,
+            padding: "0 14px",
+            borderRadius: 10,
             border:
               "1px solid rgba(255,255,255,0.08)",
-
-            borderRadius: 12,
-
-            padding:
-              "14px 16px",
-
+            background:
+              "rgba(255,255,255,0.03)",
             color: "white",
-
             outline: "none",
+            fontSize: 14,
           }}
         />
 
         <button
           onClick={execute}
-
-          disabled={loading}
-
           style={{
-            padding:
-              "14px 20px",
-
-            borderRadius: 12,
-
+            height: 44,
+            minWidth: 90,
+            borderRadius: 10,
             border:
-              "1px solid rgba(240,185,11,0.4)",
-
+              "1px solid rgba(240,185,11,0.35)",
             background:
               "rgba(240,185,11,0.12)",
-
-            color: "white",
-
+            color: "#f0b90b",
+            fontWeight: 600,
             cursor: "pointer",
+            transition: "0.2s",
           }}
         >
-          {loading
-            ? "Executando..."
-            : "Enviar"}
+          Enviar
         </button>
-
       </div>
 
       {response && (
-
         <div
           style={{
             marginTop: 20,
-
+            padding: 16,
+            borderRadius: 12,
             background:
               "rgba(255,255,255,0.03)",
-
-            borderRadius: 14,
-
-            padding: 18,
+            border:
+              "1px solid rgba(255,255,255,0.05)",
           }}
         >
+          <div>
+            <strong>Service:</strong>{" "}
+            {response.service}
+          </div>
 
-          {response.error ? (
+          <div>
+            <strong>Status:</strong>{" "}
+            {response.success
+              ? "SUCESSO"
+              : "ERRO"}
+          </div>
 
-            <div
-              style={{
-                color:
-                  "#ff6b6b",
-              }}
-            >
-              {response.error}
-            </div>
+          <div>
+            <strong>Data:</strong>{" "}
+            {response.data}
+          </div>
 
-          ) : (
-
-            <>
-
-              <div
-                style={{
-                  marginBottom: 12,
-                }}
-              >
-                <strong>
-                  Serviço:
-                </strong>{" "}
-
-                {
-                  response.service
-                }
-              </div>
-
-              <div>
-
-                <strong>
-                  Resposta:
-                </strong>{" "}
-
-                {
-                  response.response
-                }
-
-              </div>
-
-            </>
-          )}
-
+          <div>
+            <strong>Timestamp:</strong>{" "}
+            {new Date(
+              response.timestamp
+            ).toLocaleTimeString()}
+          </div>
         </div>
       )}
 
