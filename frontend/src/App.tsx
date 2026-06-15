@@ -39,10 +39,11 @@ import {
 } from "./state/vehicleState";
 
 import { VehicleStatePanel, } from "./components/vehicle/VehicleStatePanel";
-
 import { applyVehicleLogic, } from "./engine/smartLightEngine";
-
 import { getBCMById, } from "./data/modules/getBCM";
+
+import { generateLongCoding, } from "./bcm/longCoding/generateLongCoding";
+import { LongCodingPanel, } from "./components/bcm/LongCodingPanel";
 
 function App() {
 
@@ -133,6 +134,12 @@ function App() {
 
   const codingProfile =
     generateCoding(
+      selectedVehicle,
+      currentProfile
+    );
+
+  const longCoding =
+    generateLongCoding(
       selectedVehicle,
       currentProfile
     );
@@ -393,6 +400,10 @@ function App() {
           coding={
             codingProfile
           }
+        />
+
+        <LongCodingPanel
+          coding={longCoding}
         />
 
         <button
