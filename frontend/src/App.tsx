@@ -44,6 +44,7 @@ import { getBCMById, } from "./data/modules/getBCM";
 
 import { generateLongCoding, } from "./bcm/longCoding/generateLongCoding";
 import { LongCodingPanel, } from "./components/bcm/LongCodingPanel";
+import { VehicleScannerPanel, } from "./components/diagnostics/VehicleScannerPanel";
 
 function App() {
 
@@ -368,6 +369,10 @@ function App() {
           updateState={
             updateVehicleState
           }
+        />
+
+        <VehicleScannerPanel
+          vehicle={selectedVehicle}
         />
 
         <VehicleCanvas
