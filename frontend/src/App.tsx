@@ -45,6 +45,7 @@ import { getBCMById, } from "./data/modules/getBCM";
 import { generateLongCoding, } from "./bcm/longCoding/generateLongCoding";
 import { LongCodingPanel, } from "./components/bcm/LongCodingPanel";
 import { VehicleScannerPanel, } from "./components/diagnostics/VehicleScannerPanel";
+import { VehicleDiscoveryPanel, } from "./components/diagnostics/VehicleDiscoveryPanel";
 
 function App() {
 
@@ -374,6 +375,8 @@ function App() {
         <VehicleScannerPanel
           vehicle={selectedVehicle}
         />
+
+        <VehicleDiscoveryPanel />
 
         <VehicleCanvas
           lights={
