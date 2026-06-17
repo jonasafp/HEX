@@ -41,7 +41,7 @@ import {
 import { VehicleContext, } from "./state/vehicleContext";
 import { VehicleStatePanel, } from "./components/vehicle/VehicleStatePanel";
 import { applyVehicleLogic, } from "./engine/smartLightEngine";
-import { getBCMById, } from "./data/modules/getBCM";
+import { getBCMById, } from "./data/bcm/getBCM";
 
 import { generateLongCoding, } from "./bcm/longCoding/generateLongCoding";
 import { LongCodingPanel, } from "./components/bcm/LongCodingPanel";
