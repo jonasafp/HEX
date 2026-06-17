@@ -21,7 +21,7 @@ import { ConfigurationSummary } from "./components/ConfigurationSummary";
 import { EffectsPanel } from "./components/EffectsPanel";
 import { VehicleSelector } from "./components/vehicle/VehicleSelector";
 import { BCMPanel } from "./components/bcm/BCMPanel";
-import { VehicleInfoPanel } from "./components/VehicleInfoPanel";
+import { VehicleInfoPanel, } from "./components/vehicle/VehicleInfoPanel";
 import { CANMonitor } from "./components/diagnostics/CANMonitor";
 
 import { useLocalProfiles } from "./hooks/useLocalProfiles";
@@ -38,6 +38,7 @@ import {
   type VehicleState,
 } from "./state/vehicleState";
 
+import { VehicleContext, } from "./state/vehicleContext";
 import { VehicleStatePanel, } from "./components/vehicle/VehicleStatePanel";
 import { applyVehicleLogic, } from "./engine/smartLightEngine";
 import { getBCMById, } from "./data/modules/getBCM";
@@ -46,6 +47,7 @@ import { generateLongCoding, } from "./bcm/longCoding/generateLongCoding";
 import { LongCodingPanel, } from "./components/bcm/LongCodingPanel";
 import { VehicleScannerPanel, } from "./components/diagnostics/VehicleScannerPanel";
 import { VehicleDiscoveryPanel, } from "./components/diagnostics/VehicleDiscoveryPanel";
+
 
 function App() {
 
@@ -66,9 +68,12 @@ function App() {
   const [
     selectedVehicle,
     setSelectedVehicle,
-  ] = useState<VehicleProfile>(
-    vwVehicles[0]
-  );
+  ] =
+    useState<
+      VehicleProfile | null
+    >(
+      vwVehicles[0]
+    );
 
   const [
     vehicleState,
@@ -135,24 +140,30 @@ function App() {
     ) || null;
 
   const codingProfile =
-    generateCoding(
-      selectedVehicle,
-      currentProfile
-    );
+    selectedVehicle
+      ? generateCoding(
+        selectedVehicle,
+        currentProfile
+      )
+      : null;
 
   const longCoding =
-    generateLongCoding(
-      selectedVehicle,
-      currentProfile
-    );
+    selectedVehicle
+      ? generateLongCoding(
+        selectedVehicle,
+        currentProfile
+      )
+      : null;
 
   const backend =
     useBackend();
 
   const selectedBCM =
-    getBCMById(
-      selectedVehicle.bcm
-    );
+    selectedVehicle
+      ? getBCMById(
+        selectedVehicle.bcm
+      )
+      : null;
 
   function toggleLight(
     type: LightType
@@ -255,132 +266,229 @@ function App() {
 
   return (
 
-    <div
-      style={{
-        display: "flex",
+    <VehicleContext.Provider
+      value={{
+        vehicle:
+          selectedVehicle,
 
-        minHeight: "100vh",
-
-        background:
-          "radial-gradient(circle at top, #16161d 0%, #09090d 45%, #050507 100%)",
+        setVehicle:
+          setSelectedVehicle,
       }}
     >
 
-      <EventSidebar
-        selectedEvent={
-          selectedEvent
-        }
-
-        setSelectedEvent={
-          setSelectedEvent
-        }
-      />
-
       <div
         style={{
-          flex: 1,
-
-          padding: 30,
-
-          overflowY: "auto",
+          display: "flex",
+          minHeight:
+            "100vh",
         }}
       >
 
-        <h1
-          style={{
-            marginBottom: 12,
-
-            fontSize: 46,
-
-            fontWeight: 700,
-
-            letterSpacing: -1,
-          }}
-        >
-          VW Light Studio
-        </h1>
-
-        <p
-          style={{
-            color: "#8a8a95",
-
-            fontSize: 16,
-
-            marginBottom: 30,
-          }}
-        >
-          Plataforma de
-          configuração de
-          iluminação veicular
-        </p>
-
-        <VehicleSelector
-          vehicles={vwVehicles}
-
-          selectedVehicle={
-            selectedVehicle
+        <EventSidebar
+          selectedEvent={
+            selectedEvent
           }
 
-          onSelect={
-            setSelectedVehicle
+          setSelectedEvent={
+            setSelectedEvent
           }
         />
 
         <div
           style={{
-            marginBottom: 20,
+            flex: 1,
 
-            padding: 14,
+            padding: 30,
 
-            borderRadius: 14,
-
-            background:
-              "rgba(255,255,255,0.03)",
-
-            border:
-              "1px solid rgba(255,255,255,0.05)",
-
-            color: "#bfbfc8",
+            overflowY: "auto",
           }}
         >
 
-          <strong>
-            BCM Detectado:
-          </strong>
+          <h1
+            style={{
+              marginBottom: 12,
 
-          {" "}
+              fontSize: 46,
 
-          {selectedBCM?.name}
+              fontWeight: 700,
 
-          {" | "}
+              letterSpacing: -1,
+            }}
+          >
+            VW Light Studio
+          </h1>
 
-          {selectedBCM?.partNumber}
+          <p
+            style={{
+              color: "#8a8a95",
+
+              fontSize: 16,
+
+              marginBottom: 30,
+            }}
+          >
+            Plataforma de
+            configuração de
+            iluminação veicular
+          </p>
+
+          <VehicleSelector
+            vehicles={vwVehicles}
+
+            selectedVehicle={
+              selectedVehicle
+            }
+
+            onSelect={
+              setSelectedVehicle
+            }
+          />
+
+          <div
+            style={{
+              marginBottom: 20,
+
+              padding: 14,
+
+              borderRadius: 14,
+
+              background:
+                "rgba(255,255,255,0.03)",
+
+              border:
+                "1px solid rgba(255,255,255,0.05)",
+
+              color: "#bfbfc8",
+            }}
+          >
+
+            <strong>
+              BCM Detectado:
+            </strong>
+
+            {" "}
+
+            {selectedBCM?.name}
+
+            {" | "}
+
+            {selectedBCM?.partNumber}
+
+          </div>
+
+          <VehicleInfoPanel />
+
+          <VehicleStatePanel
+            state={vehicleState}
+
+            updateState={
+              updateVehicleState
+            }
+          />
+
+
+          <VehicleScannerPanel
+            vehicle={selectedVehicle}
+          />
+
+          <VehicleDiscoveryPanel />
+
+          <VehicleCanvas
+            lights={
+              currentProfile.lights
+            }
+
+            toggleLight={
+              toggleLight
+            }
+          />
+
+          <EffectsPanel
+            selectedLight={
+              selectedLight
+            }
+
+            updateAnimation={
+              updateAnimation
+            }
+          />
+
+          <ConfigurationSummary
+            lights={
+              currentProfile.lights
+            }
+          />
+
+          {codingProfile && (
+            <BCMPanel
+              coding={
+                codingProfile
+              }
+            />
+          )}
+
+          {longCoding && (
+            <LongCodingPanel
+              coding={longCoding}
+            />
+          )}
+
+          <button
+            onClick={() => {
+
+              if (!codingProfile) {
+                return;
+              }
+
+              exportCoding(
+                codingProfile
+              );
+            }}
+
+            style={{
+              marginTop: 20,
+
+              padding:
+                "14px 20px",
+
+              borderRadius: 14,
+
+              border:
+                "1px solid rgba(240,185,11,0.4)",
+
+              background:
+                "rgba(240,185,11,0.12)",
+
+              color: "white",
+
+              cursor: "pointer",
+
+              fontSize: 15,
+            }}
+          >
+            Exportar Coding
+          </button>
+
+          <CANMonitor
+            frames={
+              backend.canFrames
+            }
+          />
+
+          <UDSConsole />
+
+          <BCMEditor />
 
         </div>
 
-        <VehicleInfoPanel
-          vehicle={
-            backend.vehicle
-          }
-        />
-
-        <VehicleStatePanel
-          state={vehicleState}
-
-          updateState={
-            updateVehicleState
-          }
-        />
-
-        <VehicleScannerPanel
-          vehicle={selectedVehicle}
-        />
-
-        <VehicleDiscoveryPanel />
-
-        <VehicleCanvas
+        <LightsPanel
           lights={
             currentProfile.lights
+          }
+
+          supportedLights={
+            selectedVehicle
+              ?.supportedLights ?? []
           }
 
           toggleLight={
@@ -388,91 +496,8 @@ function App() {
           }
         />
 
-        <EffectsPanel
-          selectedLight={
-            selectedLight
-          }
-
-          updateAnimation={
-            updateAnimation
-          }
-        />
-
-        <ConfigurationSummary
-          lights={
-            currentProfile.lights
-          }
-        />
-
-        <BCMPanel
-          coding={
-            codingProfile
-          }
-        />
-
-        <LongCodingPanel
-          coding={longCoding}
-        />
-
-        <button
-          onClick={() =>
-            exportCoding(
-              codingProfile
-            )
-          }
-
-          style={{
-            marginTop: 20,
-
-            padding:
-              "14px 20px",
-
-            borderRadius: 14,
-
-            border:
-              "1px solid rgba(240,185,11,0.4)",
-
-            background:
-              "rgba(240,185,11,0.12)",
-
-            color: "white",
-
-            cursor: "pointer",
-
-            fontSize: 15,
-          }}
-        >
-          Exportar Coding
-        </button>
-
-        <CANMonitor
-          frames={
-            backend.canFrames
-          }
-        />
-
-        <UDSConsole />
-
-        <BCMEditor />
-
       </div>
-
-      <LightsPanel
-        lights={
-          currentProfile.lights
-        }
-
-        supportedLights={
-          selectedVehicle
-            .supportedLights
-        }
-
-        toggleLight={
-          toggleLight
-        }
-      />
-
-    </div>
+    </VehicleContext.Provider>
   );
 }
 

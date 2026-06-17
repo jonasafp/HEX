@@ -12,7 +12,7 @@ interface Props {
   VehicleProfile[];
 
   selectedVehicle:
-  VehicleProfile;
+  VehicleProfile | null;
 
   onSelect: (
     vehicle:
@@ -36,9 +36,18 @@ export function VehicleSelector({
         gap: 16,
       }}
     >
+      <div
+        style={{
+          color: "#f0b90b",
+          marginBottom: 10,
+          fontSize: 13,
+        }}
+      >
+        Modo: Manual
+      </div>
 
       <CustomDropdown
-        value={selectedVehicle.id}
+        value={selectedVehicle?.id ?? ""}
 
         onChange={(value) => {
 
@@ -87,8 +96,7 @@ export function VehicleSelector({
           }}
         >
           {
-            selectedVehicle
-              .platform
+            selectedVehicle?.platform
           }
         </strong>
       </div>

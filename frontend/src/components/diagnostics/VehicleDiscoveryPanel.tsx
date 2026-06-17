@@ -10,6 +10,10 @@ import {
   discoverVehicle,
 } from "../../discovery/discoverVehicle";
 
+import {
+  useVehicle,
+} from "../../hooks/useVehicle";
+
 export function VehicleDiscoveryPanel() {
 
   const [
@@ -20,19 +24,27 @@ export function VehicleDiscoveryPanel() {
       null
     );
 
+  const {
+    setVehicle,
+  } = useVehicle();
+
   async function scan() {
 
     const vin =
       await readVIN();
 
     const vehicle =
-      discoverVehicle(
-        vin
-      );
+      discoverVehicle(vin);
 
-    setResult(
-      vehicle
-    );
+    setResult(vehicle);
+
+    if (
+      vehicle.vehicle
+    ) {
+      setVehicle(
+        vehicle.vehicle
+      );
+    }
   }
 
   return (

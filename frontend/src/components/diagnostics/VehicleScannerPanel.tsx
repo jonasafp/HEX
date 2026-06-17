@@ -7,12 +7,16 @@ import type {
 } from "../../types/vehicle";
 
 interface Props {
-  vehicle: VehicleProfile;
+  vehicle: VehicleProfile | null;
 }
 
 export function VehicleScannerPanel({
   vehicle,
 }: Props) {
+
+  if (!vehicle) {
+    return null;
+  }
 
   const result =
     scanVehicle(vehicle);
