@@ -3,11 +3,7 @@ export type VWPlatform =
   | "MQB"
   | "MLB";
 
-export type BCMType =
-  | "BCM_PQ"
-  | "BCM_MQB_LOW"
-  | "BCM_MQB_HIGH"
-  | "BCM_MLB";
+export type BCMType = string;
 
 export interface VehicleModule {
 

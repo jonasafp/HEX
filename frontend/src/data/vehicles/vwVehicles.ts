@@ -22,7 +22,7 @@ export const vwVehicles:
 
     platform: "MQB",
 
-    bcm: "BCM_MQB_HIGH",
+    bcm: "MQB_HIGH_5Q0937084CF",
 
     supportedLights: [
       "drl",
@@ -49,7 +49,7 @@ export const vwVehicles:
 
     platform: "PQ",
 
-    bcm: "BCM_PQ",
+    bcm: "PQ35_7H0937087",
 
     supportedLights: [
       "drl",
@@ -75,7 +75,7 @@ export const vwVehicles:
 
     platform: "MQB",
 
-    bcm: "BCM_MQB_HIGH",
+    bcm: "MQB_HIGH_5Q0937084CF",
 
     supportedLights: [
       "drl",
