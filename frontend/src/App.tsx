@@ -48,6 +48,7 @@ import { LongCodingPanel, } from "./components/bcm/LongCodingPanel";
 import { VehicleScannerPanel, } from "./components/diagnostics/VehicleScannerPanel";
 import { VehicleDiscoveryPanel, } from "./components/diagnostics/VehicleDiscoveryPanel";
 
+import { getChannels, } from "./bcm/channels/getChannels";
 
 function App() {
 
@@ -164,6 +165,13 @@ function App() {
         selectedVehicle.bcm
       )
       : null;
+
+  const bcmChannels =
+    selectedVehicle
+      ? getChannels(
+        selectedVehicle.bcm
+      )
+      : [];
 
   function toggleLight(
     type: LightType
@@ -477,7 +485,11 @@ function App() {
 
           <UDSConsole />
 
-          <BCMEditor />
+          <BCMEditor
+            channels={
+              bcmChannels
+            }
+          />
 
         </div>
 

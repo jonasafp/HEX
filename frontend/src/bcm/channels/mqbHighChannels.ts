@@ -1,11 +1,6 @@
-export interface BCMChannel {
-
-  id: string;
-
-  label: string;
-
-  values: string[];
-}
+import type {
+  BCMChannel,
+} from "../../types/bcmChannel";
 
 export const mqbHighChannels:
   BCMChannel[] = [

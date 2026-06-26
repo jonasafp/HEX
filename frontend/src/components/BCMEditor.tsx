@@ -1,74 +1,40 @@
 import {
-  useEffect,
   useState,
 } from "react";
 
-import {
-  getBCMChannels,
-} from "../api/bcm";
-
 import type {
-  BCMValue,
-} from "../types/backend";
+  BCMChannel,
+} from "../types/bcmChannel";
 
-import {
-  BCMChannelCard,
-} from "./bcm/BCMChannelCard";
+interface Props {
 
-export function
-BCMEditor() {
+  channels:
+    BCMChannel[];
+}
+
+export function BCMEditor({
+  channels,
+}: Props) {
 
   const [
-    channels,
-    setChannels,
+    values,
+    setValues,
   ] = useState<
-    BCMValue[]
-  >([]);
+    Record<string,string>
+  >({});
 
-  useEffect(() => {
-
-    load();
-
-  }, []);
-
-  async function load() {
-
-    try {
-
-      const data =
-        await getBCMChannels();
-
-      setChannels(
-        data
-      );
-
-    } catch (error) {
-
-      console.error(
-        error
-      );
-    }
-  }
-
-  function updateChannel(
+  function updateValue(
     channelId: string,
     value: string
   ) {
 
-    setChannels((prev) =>
-      prev.map((channel) =>
+    setValues((prev) => ({
 
-        channel.id ===
-        channelId
+      ...prev,
 
-          ? {
-            ...channel,
-            value,
-          }
-
-          : channel
-      )
-    );
+      [channelId]:
+        value,
+    }));
   }
 
   return (
@@ -77,58 +43,87 @@ BCMEditor() {
       style={{
         marginTop: 24,
 
-        background:
-          "rgba(15,15,20,0.72)",
-
-        border:
-          "1px solid rgba(255,255,255,0.05)",
+        padding: 24,
 
         borderRadius: 24,
 
-        padding: 24,
+        background:
+          "rgba(10,10,14,0.75)",
+
+        border:
+          "1px solid rgba(255,255,255,0.05)",
       }}
     >
 
-      <h2
-        style={{
-          marginBottom: 24,
-        }}
-      >
-        BCM Live Editor
+      <h2>
+        BCM Adaptations
       </h2>
 
-      <div
-        style={{
-          display: "grid",
+      {channels.map(
+        (channel) => (
 
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(260px, 1fr))",
+          <div
+            key={channel.id}
+            style={{
+              marginTop: 18,
+            }}
+          >
 
-          gap: 18,
-        }}
-      >
+            <div
+              style={{
+                marginBottom: 6,
+              }}
+            >
+              {channel.label}
+            </div>
 
-        {channels.map(
-          (channel) => (
+            <select
 
-            <BCMChannelCard
-              key={channel.id}
+              value={
+                values[
+                  channel.id
+                ] || ""
+              }
 
-              channel={channel}
-
-              onChange={(
-                value
-              ) =>
-                updateChannel(
+              onChange={(e) =>
+                updateValue(
                   channel.id,
-                  value
+                  e.target.value
                 )
               }
-            />
-          )
-        )}
 
-      </div>
+              style={{
+                width: "100%",
+                padding: 10,
+                borderRadius: 10,
+                background:
+                  "#111",
+                color:
+                  "white",
+              }}
+            >
+
+              <option value="">
+                Selecione
+              </option>
+
+              {channel.values.map(
+                (value) => (
+
+                  <option
+                    key={value}
+                    value={value}
+                  >
+                    {value}
+                  </option>
+                )
+              )}
+
+            </select>
+
+          </div>
+        )
+      )}
 
     </div>
   );
